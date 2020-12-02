@@ -1,0 +1,2 @@
+# JudgeJLoBot
+Discord Bot
