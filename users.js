@@ -3,7 +3,6 @@ module.exports = Users = {
 }
 
 function info(client, msg, arg) {
-    const user = client.guildMember
     console.log("🚀 ~ file: users.js ~ line 7 ~ info ~ user", user)
     
 
