@@ -9,6 +9,9 @@ client.commands = new Discord.Collection();
 
 const PREFIX = "!";
 
+// bot login
+client.login(process.env.BOT_TOKEN);
+
 const commandFiles = fs
   .readdirSync("./commands")
   .filter((file) => file.endsWith(".js"));
@@ -82,6 +85,3 @@ client.on("message", (message) => {
     message.reply("Error executing command. Please try again.");
   }
 });
-
-// bot login
-client.login(process.env.BOT_TOKEN);
