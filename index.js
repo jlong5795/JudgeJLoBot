@@ -20,7 +20,6 @@ for (const file of commandFiles) {
   client.commands.set(command.name, command);
 }
 
-
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
 });
@@ -30,14 +29,21 @@ client.on("message", (message) => {
   if (!message.content.startsWith(PREFIX) || message.author.bot) return;
 
   const args = message.content.slice(PREFIX.length).trim().split(/ +/);
-  const command = args.shift().toLowerCase();
+  const commandName = args.shift().toLowerCase();
 
-  // List of potential commands
-  switch (command) {
-    case "ping":
-      client.commands.get("ping").execute(message, args);
-    default:
-      return message.reply("Command not found. Please try again");
+  if (!client.commands.has(commandName)) return;
+
+  const command = client.commands.get(commandName);
+
+  if (command.args && !args.length) {
+    return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
+  }
+
+  try {
+    command.execute(message, args);
+  } catch (error) {
+    console.log(error);
+    message.reply("Error executing command. Please try again.");
   }
 });
 
