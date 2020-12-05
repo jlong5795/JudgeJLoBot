@@ -1,39 +1,45 @@
-const Discord = require("discord.js");
-const client = new Discord.Client();
 require("dotenv").config();
 
-// function imports
-const Basics = require("./basics");
-const Users = require("./users");
+// library imports
+const fs = require("fs");
+const Discord = require("discord.js");
 
-client.login(process.env.BOT_TOKEN);
+const client = new Discord.Client();
+client.commands = new Discord.Collection();
+
+const PREFIX = "!";
+
+const commandFiles = fs
+  .readdirSync("./commands")
+  .filter((file) => file.endsWith(".js"));
+
+for (const file of commandFiles) {
+  const command = require(`./commands/${file}`);
+
+  // set a new item in the Collection with the key as the cmd name and value as exported module
+  client.commands.set(command.name, command);
+}
+
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
 });
 
-client.on("message", (msg) => {
+client.on("message", (message) => {
   // ignores message inputs from the bot itself
-  if (msg.author.id === process.env.BOT_ID) return;
+  if (!message.content.startsWith(PREFIX) || message.author.bot) return;
 
-  if (msg.content.startsWith("!")) {
-    const args = msg.content.split(" ");
-    const command = args[0].toLowerCase();
-    let arg = ''
-    if (args.length > 1) {
-        arg = args[1];
-    }
+  const args = message.content.slice(PREFIX.length).trim().split(/ +/);
+  const command = args.shift().toLowerCase();
 
-    // List of potential commands
-    switch (command) {
-      case "!commands":
-        return Basics.commandList(msg);
-      case "!info":
-        return Users.info(client, msg, arg);
-      case "!ping":
-        return Basics.pingPong(msg, arg);
-      default:
-        return msg.reply('Command not found. Please try again');
-    }
+  // List of potential commands
+  switch (command) {
+    case "ping":
+      client.commands.get("ping").execute(message, args);
+    default:
+      return message.reply("Command not found. Please try again");
   }
 });
+
+// bot login
+client.login(process.env.BOT_TOKEN);
