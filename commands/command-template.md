@@ -5,7 +5,7 @@ module.exports = {
     usage: '<command name> <required args>',
     cooldown: <value>,
     args: boolean,
-    execute(message, args) {
+    execute(message, args, client) {
         // command logic
     }
 }

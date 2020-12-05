@@ -6,7 +6,7 @@ module.exports = {
   aliases: ["info", "serverinfo"],
   usage: "<command name>",
   cooldown: 10,
-  execute(message, args) {
+  execute(message, args, client) {
     const { guild } = message;
     const { name, region, memberCount, owner, afkTimeout } = guild;
     const icon = guild.iconURL();

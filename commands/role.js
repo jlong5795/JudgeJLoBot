@@ -5,7 +5,7 @@ module.exports = {
     description: "Let's a user add a role to themselves",
     args: true,
     usage: '<user> <role>',
-    execute(message, args) {
+    execute(message, args, client) {
         return message.channel.send('In the future this will let you add a role to yourself.')
     }
 }

@@ -3,7 +3,7 @@ module.exports = {
   description: "Information about the arguments provided.",
   args: true,
   usage: '<user> <test arguments>',
-  execute(message, args) {
+  execute(message, args, client) {
     if (args[0] === "foo") {
       return message.channel.send("bar");
     }

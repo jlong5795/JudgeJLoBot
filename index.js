@@ -79,7 +79,7 @@ client.on("message", (message) => {
 
   // basic command handling
   try {
-    command.execute(message, args);
+    command.execute(message, args, client);
   } catch (error) {
     console.log(error);
     message.reply("Error executing command. Please try again.");
