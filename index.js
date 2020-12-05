@@ -13,6 +13,9 @@ client.on("ready", () => {
 });
 
 client.on("message", (msg) => {
+  // ignores message inputs from the bot itself
+  if (msg.author.id === process.env.BOT_ID) return;
+
   if (msg.content.startsWith("!")) {
     const args = msg.content.split(" ");
     const command = args[0].toLowerCase();
@@ -23,12 +26,14 @@ client.on("message", (msg) => {
 
     // List of potential commands
     switch (command) {
-      case "!ping":
-        return Basics.pingPong(msg, arg);
+      case "!commands":
+        return Basics.commandList(msg);
       case "!info":
         return Users.info(client, msg, arg);
+      case "!ping":
+        return Basics.pingPong(msg, arg);
       default:
-        console.log("Command not found");
+        return msg.reply('Command not found. Please try again');
     }
   }
 });
