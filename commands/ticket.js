@@ -1,4 +1,5 @@
-const channelID = '529429373661741071'; //currently bot channel, needs to be updated to tickets channel
+// #open-tickets channel
+const channelID = '784687661336100874'; 
 const check = '✅';
 let registered = false;
 
