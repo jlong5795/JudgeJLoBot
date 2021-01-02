@@ -4,7 +4,8 @@ module.exports = {
     aliases: ['array of aliases for command'],
     usage: '<command name> <required args>',
     cooldown: <value>,
-    execute(message, args) {
+    args: boolean,
+    execute(message, args, client) {
         // command logic
     }
 }

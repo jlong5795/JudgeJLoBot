@@ -3,7 +3,7 @@ module.exports = {
     aliases: ['greet', 'greeting'],
     description: 'Greetings!',
     args: false,
-    execute(message, args) {
+    execute(message, args, client) {
         message.channel.send(`Hello, ${message.author}`);
     }
   }
